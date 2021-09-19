@@ -1,6 +1,6 @@
 # alert-reactjs
 
-> Made with create-react-library
+> Alert For ReactJs
 
 [![NPM](https://img.shields.io/npm/v/alert-reactjs.svg)](https://www.npmjs.com/package/alert-reactjs) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
