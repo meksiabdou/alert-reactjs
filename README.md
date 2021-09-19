@@ -9,21 +9,40 @@
 ```bash
 npm install --save alert-reactjs
 ```
+## Props
+
+| Property | Type   | default |
+| -------- | ------ | ------------|
+| show     | boolean | false
+| type     | 'success' or 'error' or 'warning' or 'dark' | success |
+| message  | string |  null |
+| onHide   | function |  N/A |
 
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
-import MyComponent from 'alert-reactjs'
+import Alert from 'alert-reactjs'
 import 'alert-reactjs/dist/index.css'
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+const Home = () => {
+  const [show, setShow] = useState(false)
+  const [type, setType] = useState('success')
+
+  return (
+    <Alert
+      type={'success'}
+      message='Create React Library Example 😄'
+      show={show}
+      onHide={() => setShow(false)}
+    />
+  )
 }
 ```
+
+## ScreensShot 
+![Upload Tab](docs/screenshot.jpg)
 
 ## License
 
