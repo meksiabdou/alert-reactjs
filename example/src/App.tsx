@@ -3,14 +3,20 @@ import Alert from 'alert-reactjs'
 
 const App = () => {
   const [show, setShow] = useState<boolean>(false)
+  const [type, setType] = useState('error')
 
+  console.log(show);
+  
   return (
     <div style={{ padding: 10 }}>
-      <button style={{ marginBottom: 10 }} onClick={() => setShow(true)}>
+      <button style={{ marginBottom: 10 }} onClick={() => setShow(!show)}>
         show Alert
       </button>
+      <button style={{ marginBottom: 10 }} onClick={() => setType("ssss")}>
+        Change To Success
+      </button>
       <Alert
-        type={'error'}
+        type={type as any}
         message='Create React Library Example 😄'
         show={show}
         onHide={() => setShow(false)}
@@ -29,6 +35,12 @@ const App = () => {
       />
       <Alert
         type={'dark'}
+        message='Create React Library Example 😄'
+        show={show}
+        onHide={() => setShow(false)}
+      />
+      <Alert
+        type={undefined as any}
         message='Create React Library Example 😄'
         show={show}
         onHide={() => setShow(false)}

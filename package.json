@@ -1,6 +1,6 @@
 {
   "name": "alert-reactjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Alert for Reactjs",
   "author": "meksiabdou",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/meksiabdou" },
   "peerDependencies": {
     "react": "^17.0.2"
   },
