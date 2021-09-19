@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save alert-reactjs
+npm install --save https://github.com/meksiabdou/alert-reactjs
 ```
 ## Props
 
