@@ -79,7 +79,7 @@ const Alert: React.FC<IProps> = (props: IProps): JSX.Element | null => {
 
   const btnStyle: React.CSSProperties = {
     display: 'inline-block',
-    fontWeight: 400,
+    fontWeight: 700,
     lineHeight: 1,
     textAlign: 'center',
     textDecoration: 'none',
@@ -89,10 +89,11 @@ const Alert: React.FC<IProps> = (props: IProps): JSX.Element | null => {
     backgroundColor: 'transparent',
     border: '1px solid transparent',
     padding: '.375rem',
-    fontSize: '2em',
+    fontSize: '1.5em',
     opacity: opacity,
     textShadow: 'none',
-    color: Types[type].color
+    color: Types[type].color,
+    fontFamily: 'initial'
   }
 
   useEffect(() => {
