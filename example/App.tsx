@@ -1,11 +1,12 @@
+import * as React from 'react';
 import { useState } from 'react'
-import Alert from 'alert-reactjs'
+import Alert from '../.'
 
 const App = () => {
   const [show, setShow] = useState<boolean>(false)
   const [type, setType] = useState('error')
 
-  console.log(show)
+  //console.log(show)
 
   return (
     <div style={{ padding: 10 }}>
@@ -41,10 +42,12 @@ const App = () => {
           type={'dark'}
           message='Create React Library Example 😄'
           show={show}
+          customIcon={() => <p>MEKSI</p>}
           onHide={() => setShow(false)}
         />
         <Alert
-          type={undefined as any}
+          // type={undefined as any}
+          transitionTime={1000}
           message='Create React Library Example 😄'
           show={show}
           onHide={() => setShow(false)}

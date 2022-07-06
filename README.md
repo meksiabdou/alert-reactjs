@@ -6,8 +6,8 @@
 
 ## Install
 
-```bash
-npm install --save https://github.com/meksiabdou/alert-reactjs
+```cmd
+yarn add https://github.com/meksiabdou/alert-reactjs#v2
 ```
 ## Props
 
@@ -16,6 +16,8 @@ npm install --save https://github.com/meksiabdou/alert-reactjs
 | show     | boolean | false
 | type     | 'success' or 'error' or 'warning' or 'dark' | success |
 | message  | string |  null |
+| customIcon     | void | 	N/A
+| transitionTime     | number (ms) | 250
 | onHide   | function |  N/A |
 
 ## Usage
@@ -32,7 +34,7 @@ const Home = () => {
 
   return (
     <Alert
-      type={'success'}
+      type={type}
       message='Create React Library Example 😄'
       show={show}
       onHide={() => setShow(false)}
@@ -41,7 +43,7 @@ const Home = () => {
 }
 ```
 
-## ScreensShot 
+## ScreensShot
 ![Upload Tab](docs/screenshot.jpg)
 
 ## License
