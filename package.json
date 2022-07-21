@@ -1,6 +1,5 @@
 {
   "version": "2.0.2",
-  "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -33,9 +32,22 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "keywords": [
+    "reactjs",
+    "alert"
+  ],
   "name": "@meksiabdou/alert-reactjs",
   "description": "Alert for reactjs",
-  "author": "Meksi Abdennour",
+  "repository": "https://github.com/meksiabdou/alert-reactjs",
+  "author": "Meksi Abdennour <meksiabdou@gmail.com> (https://github.com/meksiabdou)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meksiabdou/alert-reactjs/issues"
+  },
+  "homepage": "https://github.com/meksiabdou/alert-reactjs#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "module": "dist/alert-reactjs.esm.js",
   "size-limit": [
     {
