@@ -151,7 +151,7 @@ const Alert: React.FC<IProps> = (props: IProps): JSX.Element | null => {
           </button>
           <p style={textStyle}>{message || ''}</p>
         </div>
-        <div className='alert-reactjs-icon'>
+        <div className="alert-reactjs-icon">
           {customIcon && typeof customIcon === 'function'
             ? customIcon()
             : alertType.Icon()}

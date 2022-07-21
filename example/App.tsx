@@ -6,8 +6,6 @@ const App = () => {
   const [show, setShow] = useState<boolean>(false)
   const [type, setType] = useState('error')
 
-  //console.log(show)
-
   return (
     <div style={{ padding: 10 }}>
       <button style={{ marginBottom: 10 }} onClick={() => setShow(!show)}>
@@ -42,7 +40,6 @@ const App = () => {
           type={'dark'}
           message='Create React Library Example 😄'
           show={show}
-          customIcon={() => <p>MEKSI</p>}
           onHide={() => setShow(false)}
         />
         <Alert
