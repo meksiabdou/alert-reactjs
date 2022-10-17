@@ -1,82 +1,185 @@
-/* eslint-disable prettier/prettier */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, isValidElement } from 'react';
 import SvgSuccesscheckmarkcircle from '../icons/SuccessCheckmarkCircle';
 import SvgErrorcheckmarkcircle from '../icons/ErrorcheCkemarkCircle';
 import SvgWarning from '../icons/Warning';
+import { AlertProps, AlertStyle, AlertStyleItem } from '../types';
 
-interface IProps {
-  show?: boolean;
-  type?: 'success' | 'error' | 'warning' | 'dark';
-  message?: string;
-  transitionTime?: number;
-  customIcon?: () => any;
-  onHide?: () => void;
-}
-
-const iconStyle: React.CSSProperties = {
-  height: 28,
-  width: 28,
-  fill: '#fff',
+const defaultIconStyle: React.CSSProperties = {
+  height: 26,
+  width: 26,
 };
 
-const Types: any = {
+const flexStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+};
+
+const textStyle: React.CSSProperties = {
+  margin: 0,
+  fontSize: '14px',
+};
+
+const defaultStyle: AlertStyle = {
   success: {
-    color: '#fff',
-    Icon: () => <SvgSuccesscheckmarkcircle {...(iconStyle as any)} />,
-    background: '#63c327',
+    icon: {
+      fill: 'rgb(4 108 78)',
+    },
+    closeIcon: {
+      color: 'rgb(4 108 78)',
+    },
+    text: {
+      color: 'rgb(4 108 78)',
+    },
+    alert: {
+      backgroundColor: 'rgb(222 247 236)',
+    },
+  },
+  info: {
+    icon: {
+      fill: 'rgb(26 86 219)',
+    },
+    closeIcon: {
+      color: 'rgb(26 86 219)',
+    },
+    text: {
+      color: 'rgb(26 86 219)',
+    },
+    alert: {
+      backgroundColor: 'rgb(225 239 254)',
+    },
   },
   error: {
-    color: '#fff',
-    Icon: () => <SvgErrorcheckmarkcircle {...(iconStyle as any)} />,
-    background: '#ff3d00',
+    icon: {
+      fill: 'rgb(200 30 30)',
+    },
+    closeIcon: {
+      color: 'rgb(200 30 30)',
+    },
+    text: {
+      color: 'rgb(200 30 30)',
+    },
+    alert: {
+      backgroundColor: 'rgb(253 232 232)',
+    },
   },
   warning: {
-    color: 'fff',
-    Icon: () => <SvgWarning fill={iconStyle.fill} height={25} width={25} />,
-    background: '#FFAB00',
+    icon: {
+      fill: 'rgb(142 75 16)',
+    },
+    closeIcon: {
+      color: 'rgb(142 75 16)',
+    },
+    text: {
+      color: 'rgb(142 75 16)',
+    },
+    alert: {
+      backgroundColor: 'rgb(253 246 178)',
+    },
   },
   dark: {
-    color: '#fff',
-    Icon: () => null,
-    background: '#2c2c2c',
+    icon: {
+      fill: '#fff',
+    },
+    closeIcon: {
+      color: '#fff',
+    },
+    text: {
+      color: '#fff',
+    },
+    alert: {
+      backgroundColor: '#2c2c2c',
+    },
   },
 };
 
-const Alert: React.FC<IProps> = (props: IProps): JSX.Element | null => {
-  const { show, message, onHide, type, transitionTime, customIcon } = props;
+const icons: any = {
+  success: {
+    render: (iconStyle: React.CSSProperties) => (
+      <SvgSuccesscheckmarkcircle
+        //fill={iconStyle.fill}
+        //{...(defaultIconStyle as any)}
+        style={iconStyle}
+      />
+    ),
+  },
+  error: {
+    render: (iconStyle: React.CSSProperties) => (
+      <SvgErrorcheckmarkcircle
+        //fill={iconStyle.fill}
+        //{...(defaultIconStyle as any)}
+        style={iconStyle}
+      />
+    ),
+  },
+  warning: {
+    render: (iconStyle: React.CSSProperties) => (
+      <SvgWarning
+        //fill={iconStyle.fill}
+        //{...(defaultIconStyle as any)}
+        style={iconStyle}
+      />
+    ),
+  },
+  info: {
+    render: (iconStyle: React.CSSProperties) => (
+      <SvgWarning
+        //fill={iconStyle.fill}
+        //{...(defaultIconStyle as any)}
+        style={iconStyle}
+      />
+    ),
+  },
+  dark: {
+    render: () => null,
+  },
+};
 
-  const [_show, setShow] = useState<Boolean>(show || false);
+const isValidType = (
+  type: 'success' | 'error' | 'warning' | 'info' | 'dark' | undefined,
+  data: any
+) => {
+  if (type && data?.[type]) {
+    return data[type];
+  } else if (!type && data?.['success']) {
+    return data['success'];
+  }
+  return {};
+};
+
+const Alert: React.FC<AlertProps> = (props: AlertProps): JSX.Element | null => {
+  const {
+    className,
+    alertStyle: customAlertStyle,
+    show,
+    message,
+    onHide,
+    type,
+    transitionTime: defaultTransitionTime,
+    customIcon,
+  } = props;
+
+  const [alertShow, setAlertShow] = useState<Boolean>(false);
   const [opacity, setOpacity] = useState<number>(0.6);
   const alertRef = useRef<HTMLDivElement>(null);
+  const alertStyleDefault = isValidType(type, defaultStyle);
+  const [style, setStyle] = useState<AlertStyleItem>(alertStyleDefault);
+  const [icon, setIcon] = useState(isValidType(type, icons));
 
-  const flexStyle: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  };
-
-  const alertType = type && type in Types ? Types[type] : Types['success'];
-  const _transitionTime =
-    typeof transitionTime === 'number' ? transitionTime : 250;
+  const transitionTime =
+    typeof defaultTransitionTime === 'number' ? defaultTransitionTime : 250;
 
   const alertStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: alertType.background,
     position: 'relative',
     padding: '0.4rem 0.6rem',
     marginBottom: '0.5rem',
     border: '1px solid transparent',
     borderRadius: '.25rem',
-    transition: `${_transitionTime}ms all`,
+    transition: `${transitionTime}ms all`,
     opacity: 0,
-  };
-
-  const textStyle: React.CSSProperties = {
-    margin: 0,
-    fontSize: '14px',
-    color: alertType.color,
   };
 
   const btnStyle: React.CSSProperties = {
@@ -94,25 +197,35 @@ const Alert: React.FC<IProps> = (props: IProps): JSX.Element | null => {
     fontSize: '1.5em',
     opacity: opacity,
     textShadow: 'none',
-    color: alertType.color,
     fontFamily: 'initial',
   };
 
+  useEffect(() => {
+    setStyle(isValidType(type, defaultStyle));
+    setIcon(isValidType(type, icons));
+  }, [type]);
+
+  useEffect(() => {
+    if (customAlertStyle && type && customAlertStyle[type]) {
+      setStyle(customAlertStyle[type] as AlertStyleItem);
+    }
+  }, [customAlertStyle]);
+
   useEffect((): ReturnType<any> => {
     let id: any = null;
-    if (_show) {
+    if (alertShow) {
       id = setTimeout(() => {
         if (alertRef.current) {
           alertRef.current.style.opacity = '1';
         }
-      }, _transitionTime);
+      }, transitionTime);
     }
     return () => clearTimeout(id);
-  }, [_show]);
+  }, [alertShow]);
 
   useEffect(() => {
     if (show) {
-      setShow(true);
+      setAlertShow(true);
     }
   }, [show]);
 
@@ -129,32 +242,52 @@ const Alert: React.FC<IProps> = (props: IProps): JSX.Element | null => {
       alertRef.current.style.opacity = '0';
     }
     return setTimeout(() => {
-      setShow(false);
+      setAlertShow(false);
       if (onHide) {
         onHide();
       }
-    }, _transitionTime);
+    }, transitionTime);
   };
 
-  if (_show) {
+  if (alertShow) {
     return (
-      <div ref={alertRef} style={alertStyle} className="alert-reactjs">
+      <div
+        ref={alertRef}
+        style={{ ...alertStyle, ...alertStyleDefault.alert, ...style?.alert }}
+        className={`alert-reactjs ${className || ''}`.trim()}
+      >
         <div style={flexStyle} className="alert-reactjs-body">
           <button
             onMouseOver={() => setOpacity(1)}
             onMouseOut={() => setOpacity(0.6)}
-            style={btnStyle}
+            style={{
+              ...btnStyle,
+              ...alertStyleDefault.closeIcon,
+              ...style.closeIcon,
+            }}
             onClick={hide}
             type="button"
           >
             ×
           </button>
-          <p style={textStyle}>{message || ''}</p>
+          <p
+            style={{
+              ...textStyle,
+              ...alertStyleDefault.text,
+              ...style?.text,
+            }}
+          >
+            {isValidElement(message) ? message : message}
+          </p>
         </div>
         <div className="alert-reactjs-icon">
-          {customIcon && typeof customIcon === 'function'
-            ? customIcon()
-            : alertType.Icon()}
+          {isValidElement(customIcon)
+            ? customIcon
+            : icon?.render?.({
+                ...defaultIconStyle,
+                ...alertStyleDefault.icon,
+                ...style?.icon,
+              })}
         </div>
       </div>
     );
@@ -163,10 +296,12 @@ const Alert: React.FC<IProps> = (props: IProps): JSX.Element | null => {
 };
 
 Alert.defaultProps = {
+  className: undefined,
   show: false,
-  message: '',
+  message: undefined,
   type: 'success',
   customIcon: undefined,
+  alertStyle: undefined,
   transitionTime: 250,
 };
 
