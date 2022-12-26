@@ -36,7 +36,6 @@ npm install @meksiabdou/alert-reactjs
 import React, { useState } from 'react';
 
 import Alert from 'alert-reactjs';
-import 'alert-reactjs/dist/index.css';
 
 const Home = () => {
   const [show, setShow] = useState(false);
